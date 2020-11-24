@@ -1,0 +1,6 @@
+/*.csv
+/shelf/
+/workspace.xml
+*.csv
+*.xml
+src.iml
