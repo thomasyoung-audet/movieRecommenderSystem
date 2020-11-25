@@ -55,13 +55,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li class="active"><a href="#">Header0</a></li>
+        <li><a href="#">Header1</a></li>
+        <li><a href="#">Header2</a></li>
+        <li><a href="#">Header3</a></li>
       </ul>
     </div>
   </div>
@@ -70,9 +67,6 @@
 <div class="container-fluid text-center">
   <div class="row content">
     <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
     </div>
     <div class="col-sm-8 text-left">
       <h1>Welcome</h1>
@@ -83,6 +77,22 @@
       <h3>Methodology</h3>
       <p>We chose to follow the methodology shown in class. We will demonstrate in this project implementations
       of user-based and item-based recommender systems.</p>
+      <hr>
+      <p>Please enter your ratings of the following movies</p>
+
+      <form action="" method="post">
+          {{ form.csrf_token() }}
+
+          {% for field in form if field.name != "csrf_token" %}
+              <p>{{ field.label() }}</p>
+              <p>{{ field }}
+                  {% for error in field.errors %}
+                      {{ error }}
+                  {% endfor %}
+              </p>
+          {% endfor %}
+      </form>
+
     </div>
     <div class="col-sm-2 sidenav">
       <div class="well">
