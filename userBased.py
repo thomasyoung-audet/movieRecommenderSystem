@@ -1,39 +1,15 @@
 import pandas as pd
-import numpy as np
-import random
 from scipy.stats.stats import pearsonr
 import operator
 
 
-def create_user_based_rating():
+def create_user_based_rating(sampling):
+    print(sampling)
     rating_data = pd.read_csv('ratings.csv')
     movie_data = pd.read_csv('movies.csv')
     user_movie_rating = pd.merge(rating_data, movie_data, on='movieId')
     user_movie_rating_p = user_movie_rating.pivot_table('rating', index='userId', columns='title').fillna(0)
 
-    movie_title_list = pd.read_csv('movies.csv')['title'].tolist()
-    titles = random.sample(movie_title_list, k=10)
-    sampling = dict()
-    for title in titles:
-        sampling[title] = np.random.randint(1, 5)
-
-
-    # try:
-        # fav_movie = input("enter your fav movie: ")
-    # option = 1
-    # for sample in set(sampling):
-    #     print(str(option) + ". " + sample)
-    #     option += 1
-    #     valid_entry = 0
-    #     while valid_entry == 0:
-    #         user_rating = input("give ratings from 1 to 5 or 0 if not watched: ")
-    #         if user_rating.isdigit() and 0 <= int(user_rating) <= 5:
-    #             sampling[sample] = int(user_rating)
-    #             valid_entry = 1
-    #         else:
-    #             print("invaild rating entry, try again")
-    # user_fav_movie = []
-    # index = 0
     # add user to df
     user_movie_rating_p = user_movie_rating_p.append(sampling, ignore_index=True).fillna(0)
 
@@ -79,7 +55,5 @@ def create_user_based_rating():
 
     sorted_dict = sorted(relevance_dict.items(), key=operator.itemgetter(1), reverse=True)
     print(sorted_dict[0:30])
+    return sorted_dict[0:15]
 
-
-if __name__ == "__main__":
-    create_user_based_rating()
