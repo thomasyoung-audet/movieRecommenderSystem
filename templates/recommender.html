@@ -1,3 +1,4 @@
+{% from "_formhelpers.html" import render_field %}
 {% extends 'base.html' %}
 
 {% block form %}
@@ -5,38 +6,37 @@
     {{ form.csrf_token() }}
 
     <p>{{titles[0]}}</p>
-    <p>{{form.movie1}}</p>
+    <p>{{ render_field(form.movie1) }}</p>
 
     <p>{{titles[1]}}</p>
-    <p>{{form.movie2}}</p>
+    <p>{{render_field(form.movie2)}}</p>
 
     <p>{{titles[2]}}</p>
-    <p>{{form.movie3}}</p>
+    <p>{{render_field(form.movie3)}}</p>
 
     <p>{{titles[3]}}</p>
-    <p>{{form.movie4}}</p>
+    <p>{{render_field(form.movie4)}}</p>
 
     <p>{{titles[4]}}</p>
-    <p>{{form.movie5}}</p>
+    <p>{{render_field(form.movie5)}}</p>
 
     <p>{{titles[5]}}</p>
-    <p>{{form.movie6}}</p>
+    <p>{{render_field(form.movie6)}}</p>
 
     <p>{{titles[6]}}</p>
-    <p>{{form.movie7}}</p>
+    <p>{{render_field(form.movie7)}}</p>
 
     <p>{{titles[7]}}</p>
-    <p>{{form.movie8}}</p>
+    <p>{{render_field(form.movie8)}}</p>
 
     <p>{{titles[8]}}</p>
-    <p>{{form.movie9}}</p>
+    <p>{{render_field(form.movie9)}}</p>
 
     <p>{{titles[9]}}</p>
     <p>{{form.movie10}}</p>
 
     <p>{{form.submit_user_based}}</p>
     <p>{{form.submit_item_based}}</p>
-
 
 </form>
 {% endblock %}

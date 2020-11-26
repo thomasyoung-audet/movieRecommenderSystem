@@ -6,7 +6,6 @@ import random
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'a really really really really long secret key'
-movies = dict()
 
 
 def get_movie_names():
@@ -17,34 +16,36 @@ def get_movie_names():
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
+    movies = dict()
     movie_titles = get_movie_names()
     form = MovieForm(movie_titles)
-    if form.validate_on_submit():
+    if form.is_submitted():
         movie1 = form.movie1.data
         movies[movie_titles[0]] = movie1
         movie2 = form.movie2.data
-        movies[movie_titles[0]] = movie2
+        movies[movie_titles[1]] = movie2
         movie3 = form.movie3.data
-        movies[movie_titles[0]] = movie3
+        movies[movie_titles[2]] = movie3
         movie4 = form.movie4.data
-        movies[movie_titles[0]] = movie4
+        movies[movie_titles[3]] = movie4
         movie5 = form.movie5.data
-        movies[movie_titles[0]] = movie5
+        movies[movie_titles[4]] = movie5
         movie6 = form.movie6.data
-        movies[movie_titles[0]] = movie6
+        movies[movie_titles[5]] = movie6
         movie7 = form.movie7.data
-        movies[movie_titles[0]] = movie7
+        movies[movie_titles[6]] = movie7
         movie8 = form.movie8.data
-        movies[movie_titles[0]] = movie8
+        movies[movie_titles[7]] = movie8
         movie9 = form.movie9.data
-        movies[movie_titles[0]] = movie9
+        movies[movie_titles[8]] = movie9
         movie10 = form.movie10.data
-        movies[movie_titles[0]] = movie10
-        print(movie1)
-        print(movie2)
+        movies[movie_titles[9]] = movie10
+        print(movies)
         if form.submit_item_based.data:
+            print("item was true")
             return redirect(url_for('user_based', result_data=movies))  # i don't know why but I have to switch these...
         if form.submit_user_based.data:
+            print("user was true")
             return redirect(url_for('item_based', result_data=movies))
 
     return render_template('recommender.html', form=form, titles=movie_titles)

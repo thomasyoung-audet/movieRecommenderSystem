@@ -1,34 +1,27 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, ValidationError
-import re
+from wtforms import SelectField, SubmitField
+from wtforms.validators import ValidationError
 
 
-class MyValidator(object):
-    def __init__(self):
-        self.min = 0
-        self.max = 5
-        self.message = "Enter a number from 1 to 5. "
-
-    def __call__(self, form, field):
-        l = field.data and len(field.data) or 0
-        if self.min >= l >= self.max:
-            raise ValidationError(self.message)
+def validate_numbers(form, field):
+    if field.data == "":
+        raise ValidationError("Sorry, you haven't made a selection")
 
 
 class MovieForm(FlaskForm):
+    numbers = [("", "---"), ('1', '1'), ('2', '2'), ('3', '3'),
+               ('4', '4'), ('5', '5'), ('0', 'I have not watched this movie')]
+
     """Movie rating form."""
-    movie1 = StringField('a', [MyValidator()])
-    movie2 = StringField('b', [MyValidator()])
-    movie3 = StringField('c', [MyValidator()])
-    movie4 = StringField('d', [MyValidator()])
-    movie5 = StringField('a', [MyValidator()])
-    movie6 = StringField('a', [MyValidator()])
-    movie7 = StringField('a', [MyValidator()])
-    movie8 = StringField('a', [MyValidator()])
-    movie9 = StringField('a', [MyValidator()])
-    movie10 = StringField('a', [MyValidator()])
+    movie1 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie2 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie3 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie4 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie5 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie6 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie7 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie8 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie9 = SelectField('', choices=numbers, validators=[validate_numbers])
+    movie10 = SelectField('', choices=numbers, validators=[validate_numbers])
     submit_item_based = SubmitField('Calculate recommendations - User-based algorithm')
     submit_user_based = SubmitField('Calculate recommendations - Item-based algorithm')
-
-
