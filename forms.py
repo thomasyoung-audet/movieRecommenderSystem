@@ -23,5 +23,7 @@ class MovieForm(FlaskForm):
     movie8 = SelectField('', choices=numbers, validators=[validate_numbers])
     movie9 = SelectField('', choices=numbers, validators=[validate_numbers])
     movie10 = SelectField('', choices=numbers, validators=[validate_numbers])
-    submit_item_based = SubmitField('Calculate recommendations - User-based algorithm')
-    submit_user_based = SubmitField('Calculate recommendations - Item-based algorithm')
+    submit_item_based = SubmitField('Calculate recommendations - User-based algorithm',
+                                    render_kw={"onclick": "alert_function"})
+    submit_user_based = SubmitField('Calculate recommendations - Item-based algorithm',
+                                    render_kw={"onclick": "alert_function"})

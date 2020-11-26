@@ -45,11 +45,12 @@ def index():
         print(movies)
         if form.submit_item_based.data:
             print("item was true")
-            flash('Submitted successfully, now calculating', "success")
+            # flash('Submitted successfully, now calculating', "success")
+            form.submit_item_based.label = "Calculating"
             return redirect(url_for('user_based', result_data=movies))
         if form.submit_user_based.data:
             print("user was true")
-            flash('Submitted successfully, now calculating', "success")
+            # flash('Submitted successfully, now calculating', "success")
             return redirect(url_for('item_based', result_data=movies))
 
     return render_template('recommender.html', form=form, titles=movie_titles)
@@ -72,7 +73,9 @@ def item_based():
 @app.route('/user_based')
 def user_based():
     result_data = request.args.get('result_data', None)
-    movies = eval(result_data)
+    movies = eval(result_data)  # this is necessary because the data gets passed as a string from the previous page
+    for key, value in movies.items():
+        movies[key] = int(value)  # turns the values from the dict into ints: from '3' to 3 etc
     print("========================")
     print(type(movies))
     if result_data:
@@ -82,4 +85,4 @@ def user_based():
     else:
         print("Result data not being passed correctly")
         recommended_movies = ['data was not passed correctly']
-    return render_template('user_based.html', result=recommended_movies)
+    return render_template('display_results.html', result=recommended_movies)

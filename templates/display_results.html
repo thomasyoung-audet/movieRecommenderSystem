@@ -1,0 +1,11 @@
+{% extends 'user_based.html' %}
+
+{% block results %}
+
+<div>
+    {% for element in result %}
+        <p>{{ element }}</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
