@@ -4,14 +4,15 @@ import operator
 
 
 def create_user_based_rating(sampling):
-    print(sampling)
     rating_data = pd.read_csv('ratings.csv')
     movie_data = pd.read_csv('movies.csv')
     user_movie_rating = pd.merge(rating_data, movie_data, on='movieId')
     user_movie_rating_p = user_movie_rating.pivot_table('rating', index='userId', columns='title').fillna(0)
 
     # add user to df
-    user_movie_rating_p = user_movie_rating_p.append(sampling, ignore_index=True).fillna(0)
+    s = pd.DataFrame([sampling])
+    print(s)
+    user_movie_rating_p = user_movie_rating_p.append(s, ignore_index=True).fillna(0)
 
     # create arrays of titles where both user and input have non zero values
     common_movies_dict = dict()

@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 
 {% block form %}
+
 <form action="" method="post">
     {{ form.csrf_token() }}
 
@@ -35,8 +36,8 @@
     <p>{{titles[9]}}</p>
     <p>{{form.movie10}}</p>
 
-    <p>{{form.submit_user_based}}</p>
-    <p>{{form.submit_item_based}}</p>
+    <p>{{form.submit_item_based }}</p>
+    <p>{{form.submit_user_based }}</p>
 
 </form>
 {% endblock %}

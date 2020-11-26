@@ -40,6 +40,7 @@
       .row.content {height:auto;}
     }
   </style>
+
 </head>
 <body>
 
@@ -80,6 +81,9 @@
       <hr>
       <p>Please enter your ratings of the following movies:</p>
       {% block form %}{% endblock %}
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+          <p class="{{ category }}">{{ message }}</p>
+      {% endfor %}
 
     </div>
     <div class="col-sm-2 sidenav">

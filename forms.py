@@ -9,8 +9,8 @@ def validate_numbers(form, field):
 
 
 class MovieForm(FlaskForm):
-    numbers = [("", "---"), ('1', '1'), ('2', '2'), ('3', '3'),
-               ('4', '4'), ('5', '5'), ('0', 'I have not watched this movie')]
+    numbers = [("", "---"), (1, '1'), (2, '2'), (3, '3'),
+               (4, '4'), (5, '5'), (0, 'I have not watched this movie')]  # (index, value)
 
     """Movie rating form."""
     movie1 = SelectField('', choices=numbers, validators=[validate_numbers])
