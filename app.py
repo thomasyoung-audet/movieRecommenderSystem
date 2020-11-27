@@ -86,8 +86,11 @@ def user_based():
     if result_data:
         print("Result data passed")
         recommended_movies = userBased.create_user_based_rating(movies)
+        top_movies = recommended_movies[0:15]
+        worst_movies = recommended_movies[-10:]  # you can try doing stuff with these two, could be interesting
+        total_movies = len(recommended_movies)  # number of movies in csv.
         print(recommended_movies)
     else:
         print("Result data not being passed correctly")
-        recommended_movies = ['data was not passed correctly']
-    return render_template('display_results.html', result=recommended_movies)
+        top_movies = ['data was not passed correctly']
+    return render_template('display_results.html', result=top_movies)

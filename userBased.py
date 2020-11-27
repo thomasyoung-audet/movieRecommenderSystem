@@ -29,7 +29,7 @@ def create_user_based_rating(sampling):
             if len(common_movies_dict[i][0]) > 1:  # can't calculate if only 1 common rating
                 pearson_coeff = pearsonr(common_movies_dict[i][0], common_movies_dict[i][1])
                 # take subset of users that are similar (correlation > 0.3?)
-                if pearson_coeff[0] >= 0:
+                if pearson_coeff[0] >= 0.1:
                     common_movies_dict[i] = pearson_coeff[0]
                 else:
                     del common_movies_dict[i]
@@ -55,6 +55,17 @@ def create_user_based_rating(sampling):
             relevance_dict[movie] = 1/sim_score_sum*weighted_rating
 
     sorted_dict = sorted(relevance_dict.items(), key=operator.itemgetter(1), reverse=True)
+    print("best moves:")
     print(sorted_dict[0:30])
-    return sorted_dict[0:15]
+    print("worst movies:")
+    print(sorted_dict[-10:])
+    print("total movies evaluated:")
+    print(len(sorted_dict))
+    return sorted_dict  # [0:15]
 
+
+if __name__ == "__main__":
+    a = {'Forrest Gump (1994)': 2, 'Pulp Fiction (1994)': 4, 'Shawshank Redemption, The (1994)': 3, 'Silence of the Lambs, The (1991)': 5,
+         'Star Wars: Episode IV - A New Hope (1977)': 2, 'Jurassic Park (1993)': 3, 'Matrix, The (1999)': 1,
+         'Toy Story (1995)': 5, "Schindler's List (1993)": 4, 'Terminator 2: Judgment Day (1991)': 2}
+    create_user_based_rating(a)
