@@ -1,17 +1,20 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from forms import MovieForm
 import userBased
+import itemBased
 import pandas as pd
 import random
-import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'a really really really really long secret key'
 
 
-def get_movie_names():
-    movie_title_list = pd.read_csv('movies.csv')['title'].tolist()
-    titles = random.sample(movie_title_list, k=10)
+def get_movie_names():  # **change made
+    rating_data = pd.read_csv('ratings.csv')
+    movie_data = pd.read_csv('movies.csv')
+    user_movie_rating = pd.merge(rating_data, movie_data, on='movieId')
+    common_movie_title_list = user_movie_rating['title'].value_counts()[:200].index.tolist()
+    titles = common_movie_title_list[:10]
     return titles
 
 
@@ -59,15 +62,17 @@ def index():
 @app.route('/item_based')
 def item_based():
     result_data = request.args.get('result_data', None)
+    movies = eval(result_data)  # this is necessary because the data gets passed as a string from the previous page
+    for key, value in movies.items():
+        movies[key] = int(value)  # turns the values from the dict into ints: from '3' to 3 etc
     print("========================")
     print(result_data)
     if result_data:
         print("Result data passed")
-        # recommended_movies = itemBased.create_user_based_rating(result_data)
-        # print(recommended_movies)
+        recommended_movies = itemBased.create_item_based_rating(result_data)
+        print(recommended_movies)
     else:
         print("Result data not being passed correctly")
-    return render_template('item_based.html')  # , result=recommended_movies)
 
 
 @app.route('/user_based')

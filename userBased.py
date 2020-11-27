@@ -29,7 +29,7 @@ def create_user_based_rating(sampling):
             if len(common_movies_dict[i][0]) > 1:  # can't calculate if only 1 common rating
                 pearson_coeff = pearsonr(common_movies_dict[i][0], common_movies_dict[i][1])
                 # take subset of users that are similar (correlation > 0.3?)
-                if pearson_coeff[0] >= 0.3:
+                if pearson_coeff[0] >= 0:
                     common_movies_dict[i] = pearson_coeff[0]
                 else:
                     del common_movies_dict[i]
