@@ -15,12 +15,13 @@ def create_item_based_rating(movies):  # movies type dict
         if int(movies_dict.get(item)) >= 3:
             fav_movie.append(item)
     print("movies to search similar movies: ", fav_movie)
-    recommendation = []
+    final_df = pd.DataFrame()
     for movie in fav_movie:
         result = sim_cal(user_movie_rating_p, movie)
-        result_df = pd.DataFrame(data=result[movie].sort_values(ascending=False)[:10])
-        recommendation.append(result_df)
-    return recommendation
+        similar_movie_list = pd.DataFrame(data=result[movie].sort_values(ascending=False)[1:11]).index.tolist() #display top ten similar movies
+        df = pd.DataFrame(data = similar_movie_list, columns = [movie])
+        final_df = pd.concat([final_df, df], axis = 1)
+    return final_df
 
 
 def sim_cal(df, movie):  # movie that we want to calculate cos_sim with other movies

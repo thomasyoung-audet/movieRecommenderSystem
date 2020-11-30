@@ -55,7 +55,7 @@ def create_user_based_rating(sampling):
             relevance_dict[movie] = 1/sim_score_sum*weighted_rating
 
     sorted_dict = sorted(relevance_dict.items(), key=operator.itemgetter(1), reverse=True)
-    print("best moves:")
+    print("best movies:")
     print(sorted_dict[0:30])
     print("worst movies:")
     print(sorted_dict[-10:])

@@ -9,13 +9,12 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'a really really really really long secret key'
 
 
-def get_movie_names():  # **change made
+def get_movie_names():
     rating_data = pd.read_csv('ratings.csv')
     movie_data = pd.read_csv('movies.csv')
     user_movie_rating = pd.merge(rating_data, movie_data, on='movieId')
-    common_movie_title_list = user_movie_rating['title'].value_counts()[:200].index.tolist()
-    titles = common_movie_title_list[:10]
-    return titles
+    common_movie_title_list = user_movie_rating['title'].value_counts()[:10].index.tolist()
+    return common_movie_title_list
 
 
 @app.route('/', methods=('GET', 'POST'))
@@ -24,7 +23,6 @@ def index():
     movie_titles = get_movie_names()
     form = MovieForm()
     if form.validate_on_submit():
-        # flash(_('Submitted successfully'))
         movie1 = form.movie1.data
         movies[movie_titles[0]] = movie1
         movie2 = form.movie2.data
@@ -48,12 +46,9 @@ def index():
         print(movies)
         if form.submit_item_based.data:
             print("item was true")
-            # flash('Submitted successfully, now calculating', "success")
-            form.submit_item_based.label = "Calculating"
             return redirect(url_for('user_based', result_data=movies))
         if form.submit_user_based.data:
             print("user was true")
-            # flash('Submitted successfully, now calculating', "success")
             return redirect(url_for('item_based', result_data=movies))
 
     return render_template('recommender.html', form=form, titles=movie_titles)
@@ -62,9 +57,6 @@ def index():
 @app.route('/item_based')
 def item_based():
     result_data = request.args.get('result_data', None)
-    movies = eval(result_data)  # this is necessary because the data gets passed as a string from the previous page
-    for key, value in movies.items():
-        movies[key] = int(value)  # turns the values from the dict into ints: from '3' to 3 etc
     print("========================")
     print(result_data)
     if result_data:
@@ -73,6 +65,7 @@ def item_based():
         print(recommended_movies)
     else:
         print("Result data not being passed correctly")
+    return render_template('item_based.html', result=[recommended_movies.to_html(classes='data')])
 
 
 @app.route('/user_based')
